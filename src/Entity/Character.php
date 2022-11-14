@@ -22,9 +22,6 @@ class Character
     #[ORM\Column(length: 255)]
     private ?string $manga = null;
 
-    #[ORM\Column]
-    private ?int $ranking = null;
-
     #[ORM\ManyToOne(inversedBy: 'characters')]
     private ?Album $album = null;
 
@@ -65,18 +62,6 @@ class Character
     public function setManga(string $manga): self
     {
         $this->manga = $manga;
-
-        return $this;
-    }
-
-    public function getRanking(): ?int
-    {
-        return $this->ranking;
-    }
-
-    public function setRanking(int $ranking): self
-    {
-        $this->ranking = $ranking;
 
         return $this;
     }
