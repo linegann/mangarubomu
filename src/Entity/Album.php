@@ -21,6 +21,9 @@ class Album
     #[ORM\OneToMany(mappedBy: 'album', targetEntity: Character::class)]
     private Collection $characters;
 
+    #[ORM\ManyToOne(inversedBy: 'album')]
+    private ?Membre $membre = null;
+
     public function __construct()
     {
         $this->characters = new ArrayCollection();
@@ -69,6 +72,18 @@ class Album
                 $character->setAlbum(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMembre(): ?Membre
+    {
+        return $this->membre;
+    }
+
+    public function setMembre(?Membre $membre): self
+    {
+        $this->membre = $membre;
 
         return $this;
     }
