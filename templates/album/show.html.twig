@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Album n°{{ album.id }} {% endblock %}
+
+{% block body %}
+
+<h2> {{ album.title }} </h2>
+<table class="table">
+    <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Manga</th>
+    </thead>
+
+    {% for character in album.characters %}
+    <tbody>
+        <td>{{ character.id }}</td>
+        <td>{{ character.name }}</td>
+        <td>{{ character.gender }}</td>
+        <td>{{ character.manga }}</td>
+    </tbody>
+    {% endfor %}
+
+</table>
+
+<p><a href="/album"> Back </a></p>
+
+{% endblock %}
