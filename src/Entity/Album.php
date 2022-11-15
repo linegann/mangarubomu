@@ -21,7 +21,7 @@ class Album
     #[ORM\OneToMany(mappedBy: 'album', targetEntity: Character::class)]
     private Collection $characters;
 
-    #[ORM\ManyToOne(inversedBy: 'album')]
+    #[ORM\ManyToOne(inversedBy: 'albums')]
     private ?Membre $membre = null;
 
     public function __construct()
@@ -74,6 +74,11 @@ class Album
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getTitle();
     }
 
     public function getMembre(): ?Membre

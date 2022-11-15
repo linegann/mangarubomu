@@ -22,11 +22,12 @@ class Membre
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: Album::class)]
-    private Collection $album;
+    private Collection $albums;
 
     public function __construct()
     {
         $this->album = new ArrayCollection();
+        $this->albums = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,15 +62,15 @@ class Membre
     /**
      * @return Collection<int, Album>
      */
-    public function getAlbum(): Collection
+    public function getAlbums(): Collection
     {
-        return $this->album;
+        return $this->albums;
     }
 
     public function addAlbum(Album $album): self
     {
-        if (!$this->album->contains($album)) {
-            $this->album->add($album);
+        if (!$this->albums->contains($album)) {
+            $this->albums->add($album);
             $album->setMembre($this);
         }
 
@@ -78,7 +79,7 @@ class Membre
 
     public function removeAlbum(Album $album): self
     {
-        if ($this->album->removeElement($album)) {
+        if ($this->albums->removeElement($album)) {
             // set the owning side to null (unless already changed)
             if ($album->getMembre() === $this) {
                 $album->setMembre(null);
