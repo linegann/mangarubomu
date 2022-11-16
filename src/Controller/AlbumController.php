@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Album;
-use App\Entity\Character;
 use Doctrine\Persistence\ManagerRegistry;
-use PhpParser\Builder\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

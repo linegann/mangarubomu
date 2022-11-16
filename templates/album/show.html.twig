@@ -5,25 +5,15 @@
 {% block body %}
 
 <h2> {{ album.title }} </h2>
-<table class="table">
-    <thead>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Gender</th>
-        <th>Manga</th>
-    </thead>
 
-    {% for character in album.characters %}
-    <tbody>
-        <td>{{ character.id }}</td>
-        <td>{{ character.name }}</td>
-        <td>{{ character.gender }}</td>
-        <td>{{ character.manga }}</td>
-    </tbody>
-    {% endfor %}
+{% for character in album.characters %}
+<ul>
+    <li><a href="{{ path('character_show', { 'id' : character.id })}}">{{ character.name }}</li>
+</ul>
+{% endfor %}
 
 </table>
 
-<p><a href="/album"> Back </a></p>
+<p><a href="{{ path('album_index') }}"> Back </a></p>
 
 {% endblock %}

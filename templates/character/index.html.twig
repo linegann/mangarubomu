@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Personnages{% endblock %}
+
+{% block body %}
+<h3>Wow regardez-moi tout ce monde :</h3>
+
+{% for character in characters %}
+<ul>
+<li><a href="{{ path('character_show', {'id': character.id }) }}"> {{character.name}} </a></li>
+</ul>
+{% endfor %}
+
+{% endblock %} {# body #}
