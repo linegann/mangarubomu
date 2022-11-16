@@ -1,0 +1,12 @@
+{% for character in field.value %}
+  {%- set url = ea_url()
+    .setController('App\\Controller\\Admin\\CharacterCrudController')
+    .setAction('detail')
+    .setEntityId(character.id)
+  -%}
+  <a href="{{ url }}">
+    {{ character.name }}{% if not loop.last %}, {% endif %}
+  </a>
+{% else %}  
+  <span class="badge badge-secondary">None</span>
+{% endfor %}
