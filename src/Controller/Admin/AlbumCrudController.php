@@ -27,7 +27,7 @@ class AlbumCrudController extends AbstractCrudController
             AssociationField::new('characters')
                 ->autocomplete()
                 ->setFormTypeOption('by_reference', false)
-                ->setTemplatePath('admin/album/characters.html.twig'),
+                ->setTemplatePath('admin/fields/album_characters.html.twig'),
         ];
     }
 
