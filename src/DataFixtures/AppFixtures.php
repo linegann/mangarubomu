@@ -42,18 +42,18 @@ class AppFixtures extends Fixture
 
     private static function charactersDataGenerator()
     {
-        yield ["Osamu Dazai", "Male", "Album de linegann", "Bungou Stray Dogs"];
-        yield ["Gojo Satoru", "Male", "Album de linegann", "Jujutsu Kaisen"];
-        yield ["Power", "Female", "Album de linegann", "Chainsaw Man"];
-        yield ["Denji", "Male", "Album de linegann", "Chainsaw Man"];
-        yield ["Makima", "Female", "Album de Ayris", "Chainsaw Man"];
-        yield ["Joker", "Female", "Album de Ayris", "Persona 5"];
-        yield ["Kurapika", "Male", "Album de linegann", "Hunter x Hunter"];
-        yield ["Hisoka", "Male", "Album de linegann", "Hunter x Hunter"];
-        yield ["Jolyne Cujoh", "Female", "Album de Sulray", "Jojo's Bizarre Adventure"];
-        yield ["Gyro Zeppeli", "Male", "Album de Sulray", "Jojo's Bizarre Adventure"];
-        yield ["Komi Shouko", "Female", "Album de linegann", "Komi can't communicate"];
-        yield ["Kiyotaka Ayanokouji", "Male", "Album de Ayris", "Classroom of the Elite"];
+        yield ["Osamu Dazai", "Male", "Album de linegann", ["Seinen", "Bungou Stray Dogs"]];
+        yield ["Gojo Satoru", "Male", "Album de linegann", ["Jujutsu Kaisen", "Shonen"]];
+        yield ["Power", "Female", "Album de linegann", ["Chainsaw Man", "Shonen"]];
+        yield ["Denji", "Male", "Album de linegann", ["Chainsaw Man", "Shonen"]];
+        yield ["Makima", "Female", "Album de Ayris", ["Chainsaw Man", "Shonen"]];
+        yield ["Joker", "Female", "Album de Ayris", ["Persona 5", "Seinen"]];
+        yield ["Kurapika", "Male", "Album de linegann", ["Hunter x Hunter", "Shonen"]];
+        yield ["Hisoka", "Male", "Album de linegann", ["Hunter x Hunter", "Shonen"]];
+        yield ["Jolyne Cujoh", "Female", "Album de Sulray", ["Jojo's Bizarre Adventure", "Seinen"]];
+        yield ["Gyro Zeppeli", "Male", "Album de Sulray", ["Jojo's Bizarre Adventure", "Seinen"]];
+        yield ["Komi Shouko", "Female", "Album de linegann", ["Komi can't communicate", "Shonen"]];
+        yield ["Kiyotaka Ayanokouji", "Male", "Album de Ayris", ["Classroom of the Elite", "Seinen"]];
         
     }
 
@@ -63,6 +63,17 @@ class AppFixtures extends Fixture
         $albumRepo = $manager->getRepository(Album::class);
         $mangaRepo = $manager->getRepository(Manga::class);
         $characterRepo = $manager->getRepository(Character::class);
+
+        foreach (self::mangasDataGenerator() as [$label, $parentName]) {
+            $manga = new Manga();
+            $manga->setLabel($label);
+            if ($parentName !== null) {
+                $parent = $mangaRepo->findOneBy(['label' => $parentName]);
+                $manga->setParent($parent);
+            }
+            $manager->persist($manga);
+            $manager->flush();
+        }
 
         foreach (self::membresDataGenerator() as [$name, $description]) {
             $membre = new Membre();
@@ -81,15 +92,22 @@ class AppFixtures extends Fixture
         }
         $manager->flush();
 
-        foreach (self::charactersDataGenerator() as [$name, $gender, $albumTitle, $manga]) {
+        foreach (self::charactersDataGenerator() as [$name, $gender, $albumTitle, $mangas]) {
             $album = $albumRepo->findOneBy(["title" => $albumTitle]);
             $character = new Character();
             $character->setName($name);
             $character->setGender($gender);
-            $character->setManga($manga);
             $album->addCharacter($character);
             $manager->persist($album);
+
+            foreach ($mangas as $mangaLabel) {
+                $manga = $mangaRepo->findOneBy(['label' => $mangaLabel]);
+                $manga->addCharacter($character);
+                $character->addManga($manga);
+            }
+            $manager->persist($manga);
             $manager->persist($character);
+
         }
         $manager->flush();
     }

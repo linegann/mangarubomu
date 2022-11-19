@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CharacterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
@@ -19,11 +21,16 @@ class Character
     #[ORM\Column(length: 255)]
     private ?string $gender = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $manga = null;
-
     #[ORM\ManyToOne(inversedBy: 'characters')]
     private ?Album $album = null;
+
+    #[ORM\ManyToMany(targetEntity: Manga::class, inversedBy: 'characters')]
+    private Collection $manga;
+
+    public function __construct()
+    {
+        $this->manga = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -54,18 +61,6 @@ class Character
         return $this;
     }
 
-    public function getManga(): ?string
-    {
-        return $this->manga;
-    }
-
-    public function setManga(string $manga): self
-    {
-        $this->manga = $manga;
-
-        return $this;
-    }
-
     public function getAlbum(): ?Album
     {
         return $this->album;
@@ -81,5 +76,29 @@ class Character
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection<int, Manga>
+     */
+    public function getManga(): Collection
+    {
+        return $this->manga;
+    }
+
+    public function addManga(Manga $manga): self
+    {
+        if (!$this->manga->contains($manga)) {
+            $this->manga->add($manga);
+        }
+
+        return $this;
+    }
+
+    public function removeManga(Manga $manga): self
+    {
+        $this->manga->removeElement($manga);
+
+        return $this;
     }
 }

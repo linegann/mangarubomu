@@ -24,9 +24,13 @@ class Manga
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $subMangas;
 
+    #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'manga')]
+    private Collection $characters;
+
     public function __construct()
     {
         $this->subMangas = new ArrayCollection();
+        $this->characters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,5 +90,37 @@ class Manga
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Character>
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(Character $character): self
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters->add($character);
+            $character->addManga($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(Character $character): self
+    {
+        if ($this->characters->removeElement($character)) {
+            $character->removeManga($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLabel();
     }
 }

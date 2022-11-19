@@ -10,7 +10,6 @@
         <th>Id</th>
         <th>Name</th>
         <th>Gender</th>
-        <th>Manga</th>
         <th>Album</th>
     </thead>
 
@@ -18,7 +17,6 @@
         <td>{{ character.id }}</td>
         <td>{{ character.name }}</td>
         <td>{{ character.gender }}</td>
-        <td>{{ character.manga }}</td>
         <td><a href="{{ path('album_show', {'id': character.album.id }) }}">{{ character.album }}</td>
     </tbody>
 
