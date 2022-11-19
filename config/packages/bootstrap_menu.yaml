@@ -1,0 +1,10 @@
+bootstrap_menu:
+  menus:
+    main:
+      items:
+        albums:
+          label: 'Albums'
+          route: 'album_index'
+        characters:
+          label: 'Characters'
+          route: 'character_index'
