@@ -22,7 +22,6 @@ class CharacterCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
             TextField::new('name'),
             TextField::new('gender'),
             AssociationField::new('manga') // remplacer par le nom de l'attribut spécifique, par exemple 'bodyShape'
