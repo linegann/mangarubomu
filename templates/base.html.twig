@@ -38,6 +38,25 @@
             <script src="{{ asset('js/scripts.js', 'startbootstrap') }}"></script>
         {% endblock %} {# javascript #}
 
+        <div class="container body-container">
+
+            <main>
+        
+            {# Ici la partie utile que les gabarits des pages vont surcharger #}
+            {% block main %}
+                <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    <i>MAIN</i>
+                  </p>
+                </div>
+                </div>
+            {% endblock %} {# main #}
+        
+            </main>
+        
+        </div> <!-- /.body-container -->
+
         {% endblock %} {# body #}
     </body>
 </html>
