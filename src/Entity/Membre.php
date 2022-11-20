@@ -24,10 +24,14 @@ class Membre
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: Album::class)]
     private Collection $albums;
 
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Team::class)]
+    private Collection $teams;
+
     public function __construct()
     {
         $this->album = new ArrayCollection();
         $this->albums = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +87,36 @@ class Membre
             // set the owning side to null (unless already changed)
             if ($album->getMembre() === $this) {
                 $album->setMembre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+            $team->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->removeElement($team)) {
+            // set the owning side to null (unless already changed)
+            if ($team->getCreator() === $this) {
+                $team->setCreator(null);
             }
         }
 

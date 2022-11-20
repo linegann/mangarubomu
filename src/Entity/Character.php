@@ -27,9 +27,13 @@ class Character
     #[ORM\ManyToMany(targetEntity: Manga::class, inversedBy: 'characters')]
     private Collection $manga;
 
+    #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'characters')]
+    private Collection $teams;
+
     public function __construct()
     {
         $this->manga = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,6 +102,33 @@ class Character
     public function removeManga(Manga $manga): self
     {
         $this->manga->removeElement($manga);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+            $team->addCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->removeElement($team)) {
+            $team->removeCharacter($this);
+        }
 
         return $this;
     }

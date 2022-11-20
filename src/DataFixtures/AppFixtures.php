@@ -6,6 +6,7 @@ use App\Entity\Membre;
 use App\Entity\Album;
 use App\Entity\Manga;
 use App\Entity\Character;
+use App\Entity\Team;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -55,6 +56,13 @@ class AppFixtures extends Fixture
         yield ["Komi Shouko", "Female", "Album de linegann", ["Komi can't communicate", "Shonen"]];
         yield ["Kiyotaka Ayanokouji", "Male", "Album de Ayris", ["Classroom of the Elite", "Seinen"]];
         
+    }
+
+    private static function teamsDataGenerator() 
+    {
+        yield ["Les zouzous", true, ["Osamu Dazai", "Gojo Satoru", "Kurapika"], "linegann"];
+        yield ["La meilleure", true, ["Makima"], "Ayris"];
+        yield ["Le S", true, ["Gyro Zeppeli"], "Sulray"];
     }
 
     public function load(ObjectManager $manager): void
@@ -108,6 +116,23 @@ class AppFixtures extends Fixture
             $manager->persist($manga);
             $manager->persist($character);
 
+        }
+        $manager->flush();
+
+        foreach (self::teamsDataGenerator() as [$description, $published, $characters, $creatorName]) {
+            $creator = $membreRepo->findOneBy(['name' => $creatorName]);
+            $team = new Team();
+            $team->setDescription($description);
+            $team->setPublished($published);
+            $team->setCreator($creator);
+
+            foreach ($characters as $characterName) {
+                $character = $characterRepo->findOneBy(['name' => $characterName]);
+                $character->addTeam($team);
+                $team->addCharacter($character);
+                $manager->persist($character);
+                $manager->persist($team);
+            }
         }
         $manager->flush();
     }
