@@ -25,6 +25,7 @@ class AppFixtures extends Fixture
         yield ["Hunter x Hunter", "Shonen"];
         yield ["Jojo's Bizarre Adventure", "Seinen"];
         yield ["Classroom of the Elite", "Seinen"];
+        yield ["Saiki Kusuo no Sai Nan", "Shonen"];
     }
 
     private static function membresDataGenerator()
@@ -55,6 +56,7 @@ class AppFixtures extends Fixture
         yield ["Gyro Zeppeli", "Male", "Album de Sulray", ["Jojo's Bizarre Adventure", "Seinen"]];
         yield ["Komi Shouko", "Female", "Album de linegann", ["Komi can't communicate", "Shonen"]];
         yield ["Kiyotaka Ayanokouji", "Male", "Album de Ayris", ["Classroom of the Elite", "Seinen"]];
+        yield ["Saiki Kusuo", "Male", null, ["Saiki Kusuo no Sai Nan", "Shonen"]];
         
     }
 
@@ -101,11 +103,13 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         foreach (self::charactersDataGenerator() as [$name, $gender, $albumTitle, $mangas]) {
-            $album = $albumRepo->findOneBy(["title" => $albumTitle]);
             $character = new Character();
             $character->setName($name);
             $character->setGender($gender);
-            $album->addCharacter($character);
+            if ($albumTitle !== null) {
+                $album = $albumRepo->findOneBy(["title" => $albumTitle]);
+                $album->addCharacter($character);
+            }
             $manager->persist($album);
 
             foreach ($mangas as $mangaLabel) {
