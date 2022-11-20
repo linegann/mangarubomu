@@ -8,6 +8,3 @@ bootstrap_menu:
         characters:
           label: 'Characters'
           route: 'character_index'
-        teams:
-          label: 'Teams'
-          route: 'team_index'
