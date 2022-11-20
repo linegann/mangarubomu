@@ -17,7 +17,13 @@
         <td>{{ character.id }}</td>
         <td>{{ character.name }}</td>
         <td>{{ character.gender }}</td>
-        <td><a href="{{ path('album_show', {'id': character.album.id }) }}">{{ character.album }}</td>
+        <td>
+            {% if character.album is not same as(null) %}
+                <a href="{{ path('album_show', {'id': character.album.id }) }}">{{ character.album }}
+            {% else %}
+                Not in any album
+            {% endif %}
+        </td>
     </tbody>
 
 </table>
