@@ -19,6 +19,14 @@
                 <th>Published</th>
                 <td>{{ team.published ? 'Yes' : 'No' }}</td>
             </tr>
+            <tr>
+                <th>Characters</th>
+                <td>
+                {% for character in team.characters %}
+                <a href="{{ path('character_show', {'id': character.id }) }}"> {{character.name}}</a>,
+                {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 
