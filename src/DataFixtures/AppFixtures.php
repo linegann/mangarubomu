@@ -56,11 +56,11 @@ class AppFixtures extends Fixture
         yield ["Gyro Zeppeli", "Male", "Album de Sulray", ["Jojo's Bizarre Adventure", "Seinen"]];
         yield ["Komi Shouko", "Female", "Album de linegann", ["Komi can't communicate", "Shonen"]];
         yield ["Kiyotaka Ayanokouji", "Male", "Album de Ayris", ["Classroom of the Elite", "Seinen"]];
-        yield ["Saiki Kusuo", "Male", null, ["Saiki Kusuo no Sai Nan", "Shonen"]];
+        yield ["Saiki Kusuo", "Male", "Album de Sulray", ["Saiki Kusuo no Sai Nan", "Shonen"]];
         
     }
 
-    private static function teamsDataGenerator() 
+    private static function teamsDataGenerator()
     {
         yield ["Les zouzous", true, ["Osamu Dazai", "Gojo Satoru", "Kurapika"], "linegann"];
         yield ["La meilleure", true, ["Makima"], "Ayris"];
