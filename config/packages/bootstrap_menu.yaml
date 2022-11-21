@@ -11,3 +11,6 @@ bootstrap_menu:
         teams:
           label: 'Teams'
           route: 'app_team_index'
+        members:
+          label: 'Members'
+          route: 'app_membre_index'
