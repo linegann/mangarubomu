@@ -41,6 +41,8 @@ class AlbumController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $albumRepository->add($album, true);
 
+            $this->addFlash('message', 'Album creation success');
+
             return $this->redirectToRoute('album_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,6 +78,8 @@ class AlbumController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $albumRepository->add($album, true);
 
+            $this->addFlash('message', 'Album edition success');
+
             return $this->redirectToRoute('album_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -90,6 +94,8 @@ class AlbumController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$album->getId(), $request->request->get('_token'))) {
             $albumRepository->remove($album, true);
+
+            $this->addFlash('message', 'Album deletion success');
         }
 
         return $this->redirectToRoute('album_index', [], Response::HTTP_SEE_OTHER);

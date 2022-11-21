@@ -38,6 +38,8 @@ class CharacterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $characterRepository->add($character, true);
 
+            $this->addFlash('message', 'Character creation success');
+
             return $this->redirectToRoute('character_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -71,6 +73,8 @@ class CharacterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $characterRepository->add($character, true);
 
+            $this->addFlash('message', 'Character edit success');
+
             return $this->redirectToRoute('character_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -85,6 +89,8 @@ class CharacterController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$character->getId(), $request->request->get('_token'))) {
             $characterRepository->remove($character, true);
+
+            $this->addFlash('message', 'Character deletion success');
         }
 
         return $this->redirectToRoute('character_index', [], Response::HTTP_SEE_OTHER);

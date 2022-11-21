@@ -31,6 +31,8 @@ class TeamController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $teamRepository->add($team, true);
 
+            $this->addFlash('message', 'Team creation success');
+
             return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -57,6 +59,8 @@ class TeamController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $teamRepository->add($team, true);
 
+            $this->addFlash('message', 'Team edition success');
+
             return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -71,6 +75,8 @@ class TeamController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$team->getId(), $request->request->get('_token'))) {
             $teamRepository->remove($team, true);
+
+            $this->addFlash('message', 'Team deletion success');
         }
 
         return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);

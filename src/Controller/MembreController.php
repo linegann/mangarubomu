@@ -31,6 +31,8 @@ class MembreController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $membreRepository->add($membre, true);
 
+            $this->addFlash('message', 'Member creation success');
+
             return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -57,6 +59,8 @@ class MembreController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $membreRepository->add($membre, true);
 
+            $this->addFlash('message', 'Member edition success');
+
             return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -71,6 +75,8 @@ class MembreController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$membre->getId(), $request->request->get('_token'))) {
             $membreRepository->remove($membre, true);
+
+            $this->addFlash('message', 'Member deletion success');
         }
 
         return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
