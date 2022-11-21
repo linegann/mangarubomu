@@ -25,9 +25,13 @@ class AlbumCrudController extends AbstractCrudController
             TextField::new('title'),
 
             AssociationField::new('characters')
+                ->hideOnForm()
                 ->autocomplete()
                 ->setFormTypeOption('by_reference', false)
                 ->setTemplatePath('admin/fields/album_characters.html.twig'),
+
+            AssociationField::new('membre'),
+
         ];
     }
 

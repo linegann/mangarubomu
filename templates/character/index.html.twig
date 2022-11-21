@@ -3,12 +3,37 @@
 {% block title %}Liste des Personnages{% endblock %}
 
 {% block main %}
-<h3>Wow regardez-moi tout ce monde :</h3>
 
-{% for character in characters %}
-<ul>
-<li><a href="{{ path('character_show', {'id': character.id }) }}"> {{character.name}} </a></li>
-</ul>
-{% endfor %}
+<h1>Wow regardez-moi tout ce monde :</h1>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Manga</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for character in characters %}
+        <tr>
+            <td>{{ character.id }}</td>
+            <td>{{ character.name }}</td>
+            <td>{{ character.gender }}</td>
+            <td>{{ character.manga|join(', ')}}</td>
+            <td>
+                <a href="{{ path('character_show', {'id': character.id}) }}">show</a>
+                <a href="{{ path('app_character_edit', {'id': character.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('app_character_new') }}">Create new</a>
 {% endblock %} {# body #}

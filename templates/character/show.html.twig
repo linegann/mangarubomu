@@ -11,6 +11,7 @@
         <th>Name</th>
         <th>Gender</th>
         <th>Album</th>
+        <th>Manga</th>
     </thead>
 
     <tbody>
@@ -24,6 +25,7 @@
                 Not in any album
             {% endif %}
         </td>
+        <td>{{ character.manga|join(', ') }}</td>
     </tbody>
 
 </table>

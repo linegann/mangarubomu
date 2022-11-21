@@ -28,7 +28,6 @@ class TeamCrudController extends AbstractCrudController
         TextField::new('description'),
 
         AssociationField::new('characters')
-        ->onlyOnForms()
         ->hideWhenCreating() // on ne souhaite pas gérer l'association entre les [objets] et la [galerie] dès la crétion de la [galerie]
         ->setTemplatePath('admin/fields/album_characters.html.twig')
         ->setQueryBuilder( // Ajout possible seulement pour des [objets] qui appartiennent au même propriétaire de l'[inventaire] que le [createur] de la [galerie]

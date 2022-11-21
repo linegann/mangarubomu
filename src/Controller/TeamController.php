@@ -53,7 +53,7 @@ class TeamController extends AbstractController
     {
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $teamRepository->add($team, true);
 
