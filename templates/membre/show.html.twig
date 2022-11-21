@@ -21,14 +21,20 @@
             </tr>
             <tr>
                 <th>Albums</th>
-                <td>{{ membre.albums|join(', ') }}</td>
+                <td>
+                    {% for album in membre.albums %}
+                    <li><a href="{{ path('album_show', {'id' : album.id}) }}">{{ album }}</a></li>
+                    {% endfor %}
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_membre_index') }}">back to list</a>
+    <a href="{{ path('app_membre_index') }}">Back to Member list</a>
 
-    <a href="{{ path('app_membre_edit', {'id': membre.id}) }}">edit</a>
+    <a href="{{ path('app_membre_edit', {'id': membre.id}) }}">Edit</a>
+
+    <a href="{{ path('app_album_new', {'id': membre.id}) }}">Add new Album</a>
 
     {{ include('membre/_delete_form.html.twig') }}
 {% endblock %}

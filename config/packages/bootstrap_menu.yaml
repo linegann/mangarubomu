@@ -2,15 +2,12 @@ bootstrap_menu:
   menus:
     main:
       items:
-        albums:
-          label: 'Albums'
-          route: 'album_index'
-        characters:
-          label: 'Characters'
-          route: 'character_index'
         teams:
           label: 'Teams'
           route: 'app_team_index'
         members:
           label: 'Members'
           route: 'app_membre_index'
+        mangas:
+          label: 'Mangas'
+          route: 'app_manga_index'

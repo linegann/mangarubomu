@@ -25,7 +25,7 @@
             <td>{{ character.manga|join(', ')}}</td>
             <td>
                 <a href="{{ path('character_show', {'id': character.id}) }}">show</a>
-                <a href="{{ path('app_character_edit', {'id': character.id}) }}">edit</a>
+                <a href="{{ path('app_character_edit', {'id': character.id}) }}">Edit</a>
             </td>
         </tr>
     {% else %}

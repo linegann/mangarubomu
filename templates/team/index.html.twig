@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les ptites équipes{% endblock %}
+{% block title %}Liste des Teams{% endblock %}
 
 {% block main %}
-    <h1>Team index</h1>
+    <h1>Les ptites équipes</h1>
 
     <table class="table">
         <thead>
@@ -22,7 +22,7 @@
                 <td>{{ team.published ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_team_show', {'id': team.id}) }}">show</a>
-                    <a href="{{ path('app_team_edit', {'id': team.id}) }}">edit</a>
+                    <a href="{{ path('app_team_edit', {'id': team.id}) }}">Edit</a>
                 </td>
             </tr>
         {% else %}

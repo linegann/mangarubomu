@@ -7,7 +7,7 @@
 
     {{ include('album/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('album_index') }}">back to list</a>
+    <a href="{{ path('app_membre_show', {'id': album.membre.id}) }}">Back to list</a>
 
     {{ include('album/_delete_form.html.twig') }}
 {% endblock %}

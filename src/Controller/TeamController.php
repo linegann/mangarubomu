@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Character;
 use App\Entity\Team;
 use App\Form\TeamType;
 use App\Repository\TeamRepository;
@@ -9,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 #[Route('/team')]
 class TeamController extends AbstractController
@@ -81,4 +83,25 @@ class TeamController extends AbstractController
 
         return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/{team_id}/character/{character_id}", name="app_team_character_show", methods={"GET"})
+     * @ParamConverter("team", options={"id" = "team_id"})
+     * @ParamConverter("character", options={"id" = "character_id"})
+     */
+    public function characterShow(Team $team, Character $character): Response
+    {
+        if(! $team->getCharacters()->contains($character)) {
+            throw $this->createNotFoundException("Couldn't find such a character in this team!");
+        }
+    
+        if(! $team->isPublished()) {
+            throw $this->createAccessDeniedException("You cannot access the requested ressource!");
+        }
+
+        return $this->render('team/character_show.html.twig', [
+            'character' => $character,
+            'team' => $team
+        ]);
+}
 }

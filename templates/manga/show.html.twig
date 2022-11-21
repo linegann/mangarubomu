@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manga{% endblock %}
+
+{% block main %}
+<h1>Manga</h1>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ manga.id }}</td>
+        </tr>
+        <tr>
+            <th>Label</th>
+            <td>{{ manga.label }}</td>
+        </tr>
+        {% if manga.parent is not same as(null) %}
+        <tr>
+            <th>Parent</th>
+            <td>{{ manga.parent }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <th>Label</th>
+            <td>
+                {% for character in manga.characters %}
+                <li>{{ character }}</li>
+                {% endfor %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<a href="{{ path('app_manga_index') }}">back to list</a>
+
+<a href="{{ path('app_manga_edit', {'id': manga.id}) }}">edit</a>
+
+{{ include('manga/_delete_form.html.twig') }}
+{% endblock %}

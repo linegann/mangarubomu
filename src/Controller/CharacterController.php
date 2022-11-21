@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Character;
 use App\Form\CharacterType;
 use App\Repository\CharacterRepository;
+use App\Entity\Album;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,10 +29,11 @@ class CharacterController extends AbstractController
         );
     }
 
-    #[Route('/new', name: 'app_character_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CharacterRepository $characterRepository): Response
+    #[Route('/new/{id}', name: 'app_character_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, CharacterRepository $characterRepository, Album $album): Response
     {
         $character = new Character();
+        $character->setAlbum($album);
         $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 
@@ -40,7 +42,7 @@ class CharacterController extends AbstractController
 
             $this->addFlash('message', 'Character creation success');
 
-            return $this->redirectToRoute('character_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('album_show', ['id' => $album->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('character/new.html.twig', [
@@ -75,7 +77,7 @@ class CharacterController extends AbstractController
 
             $this->addFlash('message', 'Character edit success');
 
-            return $this->redirectToRoute('character_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('character_show', ['id' => $character->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('character/edit.html.twig', [
@@ -87,12 +89,15 @@ class CharacterController extends AbstractController
     #[Route('/{id}', name: 'app_character_delete', methods: ['POST'])]
     public function delete(Request $request, Character $character, CharacterRepository $characterRepository): Response
     {
+        $album = $character->getAlbum();
+        $albumid = $album->getId();
+
         if ($this->isCsrfTokenValid('delete'.$character->getId(), $request->request->get('_token'))) {
             $characterRepository->remove($character, true);
 
             $this->addFlash('message', 'Character deletion success');
         }
 
-        return $this->redirectToRoute('character_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('album_show', ['id' => $albumid], Response::HTTP_SEE_OTHER);
     }
 }

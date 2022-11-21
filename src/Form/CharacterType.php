@@ -14,7 +14,7 @@ class CharacterType extends AbstractType
         $builder
             ->add('name')
             ->add('gender')
-            ->add('album')
+            ->add('album', null, ['disabled' => true])
             ->add('manga')
         ;
     }

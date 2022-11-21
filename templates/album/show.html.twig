@@ -18,7 +18,11 @@
         </tr>
         <tr>
             <th>Characters</th>
-            <td>{{ album.characters|join(', ') }}</td>
+            <td>
+                {% for character in album.characters %}
+                <li><a href="{{ path('character_show', {'id' : character.id}) }}">{{ character }}</a></li>
+                {% endfor %}
+            </td>
         </tr>
         <tr>
             <th>Creator</th>
@@ -27,9 +31,12 @@
     </tbody>
 </table>
 
-<a href="{{ path('album_index') }}">back to list</a>
+<a href="{{ path('app_membre_show' , {'id': album.membre.id}) }}">back to {{album.membre.name}}</a>
 
-<a href="{{ path('app_album_edit', {'id': album.id}) }}">edit</a>
+<a href="{{ path('app_album_edit', {'id': album.id}) }}">Edit</a>
+
+<a href="{{ path('app_character_new', {'id': album.id}) }}">Add new Character</a>
 
 {{ include('album/_delete_form.html.twig') }}
+
 {% endblock %}
